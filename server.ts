@@ -27,10 +27,10 @@ wss.on('connection', (ws: WebSocket) => {
     ws.send(JSON.stringify(assignIdMsg));
 
     ws.on('message', (message: string) => {
-        console.log(`Received message: ${message}`);
         try {
             // will throw an error if message isn't valid json 
             const receivedMsg = JSON.parse(message) as MessagesFromClient;
+            console.log(`Received message: ${receivedMsg.type} from ${receivedMsg.playerId}`);
 
             switch (receivedMsg.type) {
                 case "CreateRoomRequest":
