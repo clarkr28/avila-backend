@@ -4,7 +4,8 @@
   "description": "backend server for multiplayer avila game",
   "main": "server.ts",
   "scripts": {
-    "start": "tsc && node dist/server.js",
+    "start": "tsc && env-cmd -f envs/local.env node dist/server.js",
+    "start:prod": "tsc && env-cmd -f envs/prod.env node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jared Clark",
@@ -14,6 +15,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "env-cmd": "^10.1.0",
     "ws": "^8.14.2"
   }
 }

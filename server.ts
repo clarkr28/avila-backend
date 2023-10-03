@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import { IAssignIdResponse, ICreateRoomResponse, IJoinRoomHostResponse, IJoinRoomPlayerResponse, IStartGameResponse, MessagesFromClient, MessagesFromServer } from './messages';
 
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: Number.parseInt(process.env.PORT) });
 
 let nextClientId = 1;
 let nextRoomId = 1;
