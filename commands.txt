@@ -1,0 +1,4 @@
+Stream Logs
+az webapp log tail --name avilabackend --resource-group appsvc_linux_centralus
+
+
