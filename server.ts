@@ -18,7 +18,7 @@ const roomToPlayers: Map<string, IPlayer[]> = new Map<string, IPlayer[]>();
 
 wss.on('connection', (ws: WebSocket) => {
 
-    const playerId = `${nextClientId++}`;
+    let playerId = `${nextClientId++}`;
     console.log(`New client connected. You are ID: ${playerId}`);
     const assignIdMsg: IAssignIdResponse = {
         type: "AssignIdMessage",
@@ -100,6 +100,19 @@ wss.on('connection', (ws: WebSocket) => {
                         receivedMsg.playerId,
                         { type: "EndTurnResponse", data: receivedMsg.data}
                     );
+                    break;
+                case "ReconnectRequest":
+                    playerId = receivedMsg.playerId;
+                    // update the socket tied to the player
+                    if (idToRoom.has(playerId)) {
+                        const room = idToRoom.get(playerId);
+                        const players = roomToPlayers.get(room);
+                        for (let i = 0; i < players?.length ?? 0; i++) {
+                            if (players[i].playerId === playerId) {
+                                players[i].socket = ws;
+                            }
+                        }
+                    }
                     break;
             }
 
